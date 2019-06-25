@@ -35,9 +35,11 @@ void quick_sort(int A[], int n){
             j++;
         }
     }
-    swap(A,A+j-1); 
-    if(j-1>1) quick_sort(A,j-1);
-    if(n-j >1)quick_sort(A+j+same,n-j-same);
+    for(i=0; i<=same;i++){
+     swap(A+i,A+j-i-1);   
+    }
+    if(j-1>1) quick_sort(A,j-1-same);
+    if(n-j >1)quick_sort(A+j,n-j);
 }
 
 int main(){
