@@ -4,6 +4,7 @@
 #define N 2999
 
 int A[N];
+int B[N];
 
 // *p と *q の値を入れ替える関数
 void swap(int *p, int *q){
@@ -19,18 +20,65 @@ int quick_select(int A[], int n, int k){
 // 真ん中の要素をピボットとする
   pivot = A[n/2];
   A[n/2] = A[0];
-  A[0] = pivot;
+  A[0] = pivot ;
+  int same = 0;
   for(i = j = 1; i < n; i++){
-    if(A[i] <= pivot){
+    if(A[i] < pivot){
       swap(A+i, A+j);
       j++;
     }
+    else if(A[i] == pivot){
+        swap(A+i,A+j);
+        same++;
+        swap(A+same,A+i);
+        j++;
+    }
+  }
+  if(j == k+1) return pivot;
+  else if(j < k+1) return quick_select(A+j+same, n-j-same, k-j);
+  else return quick_select(A+1+same, j-1, k);
+
+}
+
+
+int median(int A[], int n, int k){
+  int length = (n+4)/5;
+  if (n <= 5){
+      return quick_select(A,n,n/2);
+    }
+  else{
+    for(int i = 0; i < length;i++) {
+      B[i] = quick_select(A+i*5,i*5+4,i*5+2);
+    }
+
+    int pivot = quick_select(B,length,length/2);
+    int i,j,same;
+    for(i = j = 0; i < n; i++){
+      if(A[i] < pivot){
+        swap(A+i, A+j);
+        j++;
+      }
+      else if(A[i] == pivot){
+          swap(A+i,A+j);
+          same++;
+          swap(A+same,A+i);
+          j++;
+      }
+    }
+
+
+    for(i=0; i<=same;i++){
+     swap(A+i,A+j-i-1);   /*pivotはj-same番目に小さい要素*/
+    }
+    int r = j;
+    if (j-same <= k && j >= k+1) return pivot;
+    else if (r < k) median(A+j,n-r,k-r);
+    else median(A,j-same-1,k+1);
   }
 
-  if(j == k+1) return pivot;
-  else if(j < k+1) return quick_select(A+j, n-j, k-j);
-  else return quick_select(A+1, j-1, k);
-}
+  }
+
+
 
 
 int main(){
