@@ -31,12 +31,12 @@ void quick_sort(int A[], int n){
         else if(A[i] == pivot){
             swap(A+i,A+j);
             same++;
-            swap(A+same,A+i);
+            swap(A+same,A+j); /*A[i]とA[j]を間違えていました*/
             j++;
         }
     }
     for(i=0; i<=same;i++){
-     swap(A+i,A+j-i-1);   
+     swap(A+i,A+j-i-1);
     }
     if(j-1>1) quick_sort(A,j-1-same);
     if(n-j >1)quick_sort(A+j,n-j);

@@ -4,7 +4,6 @@
 #define N 2999
 
 int A[N];
-int B[N];
 
 // *p と *q の値を入れ替える関数
 void swap(int *p, int *q){
@@ -30,7 +29,7 @@ int quick_select(int A[], int n, int k){
     else if(A[i] == pivot){
         swap(A+i,A+j);
         same++;
-        swap(A+same,A+i);
+        swap(A+same,A+j);
         j++;
     }
   }
@@ -42,13 +41,23 @@ int quick_select(int A[], int n, int k){
 
 
 int median(int A[], int n, int k){
+  int B[N];
   int length = (n+4)/5;
   if (n <= 5){
       return quick_select(A,n,n/2);
     }
   else{
-    for(int i = 0; i < length;i++) {
-      B[i] = quick_select(A+i*5,i*5+4,i*5+2);
+    for(i = 0; i < n;i++){
+      B[i] = A[i];
+    }
+    int l = n;
+    while(l > 5){
+      for(i = j = 0; 5*i < l-5; i++) {
+        B[i] = quick_select(B+5*i;5;2);
+        j++;
+      }
+      B[j] = quick_select(B+5*j,l-5*5,(l-5*b)/2);
+      l = j + 1;
     }
 
     int pivot = quick_select(B,length,length/2);
@@ -61,7 +70,7 @@ int median(int A[], int n, int k){
       else if(A[i] == pivot){
           swap(A+i,A+j);
           same++;
-          swap(A+same,A+i);
+          swap(A+same,A+j);
           j++;
       }
     }
