@@ -41,19 +41,21 @@ int quick_select(int A[], int n, int k){
 
 
 int median(int A[], int n, int k){
+  int i,j;
   int B[N];
   int length = (n+4)/5;
   if (n <= 5){
       return quick_select(A,n,n/2);
     }
   else{
-    for(i = 0; i < n;i++){
+    for(int i = 0; i < n;i++){
       B[i] = A[i];
     }
     int l = n;
+    int b;
     while(l > 5){
       for(i = j = 0; 5*i < l-5; i++) {
-        B[i] = quick_select(B+5*i;5;2);
+        B[i] = quick_select(B+5*i,5,2);
         j++;
       }
       B[j] = quick_select(B+5*j,l-5*5,(l-5*b)/2);
